@@ -1,7 +1,7 @@
 class ProductManager {
     products;
-    static id = 0
-    constructor(title, description, price, thumbnail, code, stock,) {
+    static id = 1
+    constructor(title, description, price, thumbnail, code, stock, id) {
         ProductManager.id += 1;
         this.products = [];
         this.title = title;
@@ -10,6 +10,7 @@ class ProductManager {
         this.thumbnail = thumbnail;
         this.code = code;
         this.stock = stock;
+        ProductManager.id;
     }
 
     addProduct(product) {
@@ -22,8 +23,9 @@ class ProductManager {
         }
 
         else {
+            ProductManager.id++
             this.products.push(product);
-            ProductManager.id++;
+            
         }
     }
 
@@ -53,7 +55,7 @@ const product1 = {
     thumbnail: "ABCD",
     code: "120",
     stock: 10,
-
+    id: ProductManager.id,
 };
 
 const product2 = {
@@ -63,7 +65,7 @@ const product2 = {
     thumbnail: "ABCDE",
     code: "121",
     stock: 8,
-
+    id: ProductManager.id,
 };
 
 const product3 = {
@@ -73,6 +75,7 @@ const product3 = {
     thumbnail: "ABCDEFG",
     code: "120", //repite code para forzar error
     stock: 15,
+    id: ProductManager.id,
 };
 
 const product4 = {
@@ -82,6 +85,7 @@ const product4 = {
     thumbnail: "ABCDEFGH",
     code: "123",
     stock: 10,
+    id: ProductManager.id,
 };
 
 nuevosProductos.addProduct(product1);
@@ -92,4 +96,4 @@ nuevosProductos.addProduct(product4);
 console.log(nuevosProductos.getProducts())
 
 console.log("hola mundo")
-console.log(nuevosProductos.getProductsById(10))
+console.log(nuevosProductos.getProductsById())
