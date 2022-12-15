@@ -1,8 +1,8 @@
 class ProductManager {
     products;
     static id = 1
-    constructor(title, description, price, thumbnail, code, stock, id) {
-        ProductManager.id += 1;
+    constructor(title, description, price, thumbnail, code, stock,) {
+       // ProductManager.id += 1;  //me di cuenta que este ahora esta de mas.//
         this.products = [];
         this.title = title;
         this.description = description;
@@ -10,10 +10,19 @@ class ProductManager {
         this.thumbnail = thumbnail;
         this.code = code;
         this.stock = stock;
-        ProductManager.id;
     }
 
     addProduct(product) {
+        let productoAagregar = {
+            title: product.title,
+            description: product.description,
+            price: product.price,
+            thumbnail: product.thumbnail,
+            code: product.code,
+            stock: product.stock,
+
+            id: ProductManager.id
+        };
         let existe = this.products.find((p) => p.code === product.code);
         if (existe) {
             return console.log("El CODIGO  " + product.code + " Ya existe");
@@ -23,9 +32,8 @@ class ProductManager {
         }
 
         else {
+            this.products.push(productoAagregar);
             ProductManager.id++
-            this.products.push(product);
-            
         }
     }
 
@@ -41,9 +49,7 @@ class ProductManager {
         } else {
             console.log("error")
         }
-        // no pude agregarle el ID. 
     }
-
 }
 
 const nuevosProductos = new ProductManager();
@@ -55,17 +61,15 @@ const product1 = {
     thumbnail: "ABCD",
     code: "120",
     stock: 10,
-    id: ProductManager.id,
 };
 
 const product2 = {
     title: "Chocotorta",
-    // description: "Torta Clasica",   //  *anulo para forzar error
+ // description: "Torta Clasica",   //  *anulo para forzar error
     price: 2700,
     thumbnail: "ABCDE",
     code: "121",
     stock: 8,
-    id: ProductManager.id,
 };
 
 const product3 = {
@@ -75,7 +79,6 @@ const product3 = {
     thumbnail: "ABCDEFG",
     code: "120", //repite code para forzar error
     stock: 15,
-    id: ProductManager.id,
 };
 
 const product4 = {
@@ -85,15 +88,24 @@ const product4 = {
     thumbnail: "ABCDEFGH",
     code: "123",
     stock: 10,
-    id: ProductManager.id,
+};
+
+const product5 = {
+    title: "Lemon Pie",
+    description: "Torta Clasica",
+    price: 4500,
+    thumbnail: "ABCDEFGHI",
+    code: "124",
+    stock: 20,
 };
 
 nuevosProductos.addProduct(product1);
 nuevosProductos.addProduct(product2);
 nuevosProductos.addProduct(product3);
 nuevosProductos.addProduct(product4);
+nuevosProductos.addProduct(product5);
 
 console.log(nuevosProductos.getProducts())
 
 console.log("hola mundo")
-console.log(nuevosProductos.getProductsById())
+console.log(nuevosProductos.getProductsById(2))
