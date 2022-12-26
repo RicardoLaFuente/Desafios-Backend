@@ -133,3 +133,4 @@ console.log("hola mundo")
 
 
 nuevosProductos.readFileProduct();
+nuevosProductos.writeFileProduct();

@@ -71,6 +71,36 @@ class ProductManager {
             console.log("error")
         }
     }
+
+    deleteProduct(id) {
+        let arrayVacio = []
+       this.products.map((product)=> {
+            if (product.id === id) arrayVacio.push(product)
+            console.log('arrayvacio', arrayVacio)
+
+            writeFile('productos.json',JSON.stringify(this.products)
+            ,(err)=>{
+                if (err) throw err;
+                console.log("Agregado con exito ffffff");
+            }
+            )
+        })
+        
+
+    }
+
+    updateProduct(id, product) {
+        const data = this.products.find(product => product.id === id);      
+        if (data) {
+          let productDeleted = data.filter((product) => product.id !== id);
+          product.id = id;
+          productDeleted.push(product);
+          this.writeData(productDeleted);
+        } else {
+          console.log("el id del producto no se encuentra");
+        }
+      }
+
 }
 
 const nuevosProductos = new ProductManager();
@@ -120,16 +150,29 @@ const product5 = {
     stock: 20,
 };
 
+/*const product6 = {
+    title: "Lemon Pie",
+    description: "Torta Clasica",
+    price: 4500,
+    thumbnail: "ABCDEFGHI",
+    code: "128",
+    stock: 20,
+};
+*/
 nuevosProductos.addProduct(product1);
 nuevosProductos.addProduct(product2);
 nuevosProductos.addProduct(product3);
 nuevosProductos.addProduct(product4);
 nuevosProductos.addProduct(product5);
+//nuevosProductos.addProduct(product6);
 
 //console.log(nuevosProductos.getProducts())
 
 console.log("hola mundo")
-//console.log(nuevosProductos.getProductsById(2))
+console.log(nuevosProductos.getProductsById(3))
 
-
+nuevosProductos.writeFileProduct();
 nuevosProductos.readFileProduct();
+//nuevosProductos.deleteProduct(2);
+nuevosProductos.updateProduct()
+
