@@ -1,11 +1,11 @@
-const {writeFile, readFile} = require ('fs');
+const { writeFile, readFile, writeFileSync, readFileSync } = require('fs');
 
 
 class ProductManager {
     products;
     static id = 1
     constructor(title, description, price, thumbnail, code, stock,) {
-       // ProductManager.id += 1;  //me di cuenta que este ahora esta de mas.//
+        // ProductManager.id += 1;  //me di cuenta que este ahora esta de mas.//
         this.products = [];
         this.title = title;
         this.description = description;
@@ -15,18 +15,18 @@ class ProductManager {
         this.stock = stock;
     }
 
-    writeFileProduct()  {
-        writeFile('productos.json',JSON.stringify(this.products)
-        ,(err)=>{
-            if (err) throw err;
-            console.log("Agregado con exito");
-        }
+    writeFileProduct() {
+        writeFileSync('productos.json', JSON.stringify(this.products)
+            , (err) => {
+                if (err) throw err;
+                console.log("Agregado con exito");
+            }
         )
     }
 
-    readFileProduct(){
-        readFile('productos.json', 'utf-8',(err, data)=>{
-            if(err) throw err;
+    readFileProduct() {
+        readFileSync('productos.json', 'utf-8', (err, data) => {
+            if (err) throw err;
             console.log(JSON.parse(data));
         })
     }
@@ -63,7 +63,7 @@ class ProductManager {
 
     }
 
-    getProductsById(id) {     
+    getProductsById(id) {
         const product = this.products.find(product => product.id === id);
         if (product) {
             console.log(product)
@@ -74,32 +74,39 @@ class ProductManager {
 
     deleteProduct(id) {
         let arrayVacio = []
-       this.products.map((product)=> {
-            if (product.id === id) arrayVacio.push(product)
-            console.log('arrayvacio', arrayVacio)
 
-            writeFile('productos.json',JSON.stringify(this.products)
-            ,(err)=>{
-                if (err) throw err;
-                console.log("Agregado con exito ffffff");
-            }
+        this.products.map((product) => {
+            if (product.id !== id) arrayVacio.push(product)
+            console.log('arrayvacio', arrayVacio)
+            writeFileSync('productos.json', JSON.stringify(arrayVacio)
+                , (err) => {
+                    if (err) throw err;
+
+                },
+
             )
         })
-        
+
 
     }
 
     updateProduct(id, product) {
-        const data = this.products.find(product => product.id === id);      
-        if (data) {
-          let productDeleted = data.filter((product) => product.id !== id);
-          product.id = id;
-          productDeleted.push(product);
-          this.writeData(productDeleted);
-        } else {
-          console.log("el id del producto no se encuentra");
+
+        const data = JSON.parse(readFileSync(`productos.json`, "utf-8"));
+
+        data.map(element => {
+            if (element.id === id) {
+                element.title = product.title,
+                    element.description = product.description,
+                    element.price = product.price,
+                    element.thumbnail = product.thumbnail,
+                    element.stock = product.stock,
+                    element.id = id
+            }
         }
-      }
+        );
+        writeFileSync('productos.json', JSON.stringify(data))
+    }
 
 }
 
@@ -116,7 +123,7 @@ const product1 = {
 
 const product2 = {
     title: "Chocotorta",
- // description: "Torta Clasica",   //  *anulo para forzar error
+    // description: "Torta Clasica",   //  *anulo para forzar error
     price: 2700,
     thumbnail: "ABCDE",
     code: "121",
@@ -174,5 +181,5 @@ console.log(nuevosProductos.getProductsById(3))
 nuevosProductos.writeFileProduct();
 nuevosProductos.readFileProduct();
 //nuevosProductos.deleteProduct(2);
-nuevosProductos.updateProduct()
+nuevosProductos.updateProduct(2, {title:"nuevo", description:"nuenoo", price:"24", thumbnail:"nuevo", stock:"35" })
 
