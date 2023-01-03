@@ -1,4 +1,4 @@
-const { writeFile, readFile, writeFileSync, readFileSync } = require('fs');
+const {writeFileSync, readFileSync } = require('fs');
 
 
 class ProductManager {
@@ -81,13 +81,9 @@ class ProductManager {
             writeFileSync('productos.json', JSON.stringify(arrayVacio)
                 , (err) => {
                     if (err) throw err;
-
                 },
-
             )
         })
-
-
     }
 
     updateProduct(id, product) {
@@ -123,7 +119,7 @@ const product1 = {
 
 const product2 = {
     title: "Chocotorta",
-    // description: "Torta Clasica",   //  *anulo para forzar error
+     description: "Torta Clasica",   
     price: 2700,
     thumbnail: "ABCDE",
     code: "121",
@@ -135,7 +131,7 @@ const product3 = {
     description: "Torta Clasica",
     price: 3100,
     thumbnail: "ABCDEFG",
-    code: "120", //repite code para forzar error
+    code: "129", 
     stock: 15,
 };
 
@@ -173,13 +169,16 @@ nuevosProductos.addProduct(product4);
 nuevosProductos.addProduct(product5);
 //nuevosProductos.addProduct(product6);
 
-//console.log(nuevosProductos.getProducts())
+console.log(nuevosProductos.getProducts())
 
-console.log("hola mundo")
-console.log(nuevosProductos.getProductsById(3))
+//console.log("hola mundo")
+//console.log(nuevosProductos.getProductsById(3))
 
 nuevosProductos.writeFileProduct();
 nuevosProductos.readFileProduct();
 //nuevosProductos.deleteProduct(2);
-nuevosProductos.updateProduct(2, {title:"nuevo", description:"nuenoo", price:"24", thumbnail:"nuevo", stock:"35" })
+//nuevosProductos.updateProduct(2, { title: "nuevo", description: "nuenoo", price: "24", thumbnail: "nuevo", stock: "35" })
 
+module.exports = {
+    ProductManager : nuevosProductos
+}

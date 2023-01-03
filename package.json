@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/RicardoLaFuente/Desafios-Backend/issues"
   },
-  "homepage": "https://github.com/RicardoLaFuente/Desafios-Backend#readme"
+  "homepage": "https://github.com/RicardoLaFuente/Desafios-Backend#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
