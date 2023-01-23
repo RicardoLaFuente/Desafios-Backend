@@ -1,12 +1,11 @@
 const express = require("express");
 const routersProducts = express.Router();
-//const { ProductManager } = require('../../desafio2');
 const fs = require('fs')
 
 
-//const productos = ProductManager.getProducts();
-const productos = JSON.parse(fs.readFileSync("productos.json", "utf8", (error) => { throw new Error(error) }));
-const generadorID = () => {
+
+const productos = JSON.parse(fs.readFileSync("./database/productos.json", "utf8", (error) => { throw new Error(error) }));
+const generadorID = (array) => {
     let id = 1
     const ultimoElemento = array[array.length - 1]
     if (ultimoElemento) { id = ultimoElemento.id + 1 }
@@ -36,31 +35,32 @@ routersProducts.get("/:pid", (req, res) => {
 
 });
 
-routersProducts.post("/", (req, res) => {
+/*routersProducts.post("/", (req, res) => {
     const product = req.body;
-  
+    const idGenerado = generadorID(productos)
 
-    productos.push ({
-        id: generadorID,
+    productos.push ({id: idGenerado,
         ...product,
         
     });
     res.send('producto agregado')
     fs.writeFileSync('productos.json', JSON.stringify(productos));
-});
-/*routersProducts.post("/", (req, res) => {
-    let product = req.body;
-    let id = product.length > 0 ? product[product.length - 1].id + 1 : 1;
-    let productNew = { id, ...product };
+});*/
+routersProducts.post("/", (req, res) => {
+    let productBody = req.body;
+    let id =
+        productos.length > 0 ? productos[productos.length - 1].id + 1 : 1;
+
+    let productNew = { ...productBody, id };
 
     if (productNew) {
         productos.push(productNew),
-            fs.writeFileSync('productos.json', JSON.stringify(productos))
+            fs.writeFileSync('./database/productos.json', JSON.stringify(productos))
 
         return res.status(200).json(
             {
                 message: 'Producto Agregado',
-                productNew
+                productNew,
             });
     } else {
         res.status(400).json({
@@ -69,23 +69,32 @@ routersProducts.post("/", (req, res) => {
     }
 
 
-});*/
+});
+
 
 routersProducts.put("/:pid", (req, res) => {
+    const { pid } = req.params;
 
-    const id = +req.params.pid;
-    const product = req.body;
-    const p = productos.find(p => parseInt(p.id) === parseInt(id));
-    if (!!p) {
-        p = {
-            ...product,
-            id: pid,
-        }
-        res.send('Producto actualizado');
+    const bodyProduct = req.body;
+    console.log("prodActualizado", bodyProduct);
+    let idExist = productos.find((pro) => pro.id === +pid);
+    console.log("antes", idExist);
+    if (idExist) {
+        idExist = { id: +pid, ...bodyProduct };
+        let indexAct = productos.findIndex((pro) => pro.id === +pid);
+        productos[indexAct] = idExist;
+        fs.writeFileSync('productos.JSON', JSON.stringify(productos));
+        res.send("Producto Actualizado");
     } else {
-        res.status(400).send('No existe un producto con ese id');
+        res.status(400);
+        res.send("No existe un producto con esa ID");
     }
-});
+    // Actualizar Productos
+})
+
+
+
+
 
 routersProducts.delete("/:pid", (req, res) => {
     let arrayVacio = [];
@@ -95,7 +104,7 @@ routersProducts.delete("/:pid", (req, res) => {
 
     })
     console.log('arrayvacio', arrayVacio)
-    fs.writeFileSync('productos.json', JSON.stringify(arrayVacio));
+    fs.writeFileSync('./database/productos.json', JSON.stringify(arrayVacio));
     res.send('Producto eliminado');
 });
 
