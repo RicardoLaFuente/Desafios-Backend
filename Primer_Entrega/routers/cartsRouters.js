@@ -5,6 +5,7 @@ const fs = require("fs");
 let cartBase = JSON.parse(fs.readFileSync("./database/carritos.json", "utf-8"));
 let productCarrito = JSON.parse(fs.readFileSync("./database/productos.json", "utf-8"));
 
+
 const generadorID = (array) => {
 
     let id = 1 //tenemos la variable ID
@@ -38,20 +39,36 @@ routerCarts.get("/:cid", (req, res) => {
 
 routerCarts.post("/:cid/product/:pid", (req, res) => {
     const {cid} = req.params;
-    const idcart = cartBase.find((pro) => pro.id === +cid);
-    const carritoId = idcart.products
+    const idcart = cartBase.find((pro => pro.id = cid));
+    console.log("idCart", idcart)
   
     const {pid} = req.params;
-    const idpro = productCarrito.find((pro) => pro.id === +pid);
-    const proId = idpro.id
+    const idpro = productCarrito.find((pro => pro.id = pid));
+    console.log("idpro", idpro.products)
+    //const proId = idpro.id
+
+    const productoRepetido = idcart.productCarrito.find( e => e.id = pid);
+
+    if(productoRepetido){
+        idcart.productCarrito.map( (element)=>{ if(element.id = pid){element.quantity++}})
+    } else {
+        idcart.productCarrito.push({
+            id: idpro.id,
+            quantity: 1
+        })
+    }
  
-  const productNew = {
+    fs.writeFileSync("./database/carritos.json", JSON.stringify(cartBase),(err)=>{ throw new Error (err)});
+    
+    res.send(idcart);
+
+  /*const productNew = {
     id:proId,
     quantity: 1
   }
   carritoId.push(productNew)
-  const checkInCart = cartBase.find(p => p.id === +carritoId)
-
+  const checkInCart = cartBase.find(p => p.id === carritoId)
+  console.log("checking", checkInCart)
   if(checkInCart) {
     const verify1 = checkInCart.products.find(product=>product.id===proId)
   
@@ -69,7 +86,7 @@ routerCarts.post("/:cid/product/:pid", (req, res) => {
 
   
     res.send(idcart);
-    // agregar el producto al carrito
+    // agregar el producto al carrito */
 });
 
 
