@@ -1,1 +1,47 @@
-[{"title":"Cheescake","description":"Torta Clasica","price":2500,"thumbnail":"ABCD","code":"120","stock":10,"id":1},{"title":"Chocotorta","description":"Torta Clasica","price":2700,"thumbnail":"ABCDE","code":"121","stock":8,"id":2},{"title":"Marquise","description":"Torta Clasica","price":3100,"thumbnail":"ABCDEFG","code":"129","stock":15,"id":3},{"title":"Chocoreo","description":"Torta Clasica","price":3300,"thumbnail":"ABCDEFGH","code":"123","stock":10,"id":4},{"title":"Lemon Pie","description":"Torta Clasica","price":4500,"thumbnail":"ABCDEFGHI","code":"124","stock":20,"id":5}]
+[
+    {
+        "title": "Cheescake",
+        "description": "Torta Clasica",
+        "price": 2500,
+        "thumbnail": "ABCD",
+        "code": "120",
+        "stock": 10,
+        "id": 1
+    },
+    {
+        "title": "Chocotorta",
+        "description": "Torta Clasica",
+        "price": 2700,
+        "thumbnail": "ABCDE",
+        "code": "121",
+        "stock": 8,
+        "id": 2
+    },
+    {
+        "title": "Marquise",
+        "description": "Torta Clasica",
+        "price": 3100,
+        "thumbnail": "ABCDEFG",
+        "code": "129",
+        "stock": 15,
+        "id": 3
+    },
+    {
+        "title": "Chocoreo",
+        "description": "Torta Clasica",
+        "price": 3300,
+        "thumbnail": "ABCDEFGH",
+        "code": "123",
+        "stock": 10,
+        "id": 4
+    },
+    {
+        "title": "Lemon Pie",
+        "description": "Torta Clasica",
+        "price": 4500,
+        "thumbnail": "ABCDEFGHI",
+        "code": "124",
+        "stock": 20,
+        "id": 5
+    }
+]

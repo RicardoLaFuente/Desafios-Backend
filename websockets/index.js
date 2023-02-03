@@ -35,14 +35,18 @@ socketServer.on("connection", (socket) => {
   socket.emit("cargadeProductos", productos);
   socket.on("productoNuevo", (products)=>{
     let objetoNuevo = {id:uuidv4() , ...products};
-    products.push(objetoNuevo);
+    productos.push(objetoNuevo);  
+    // aca cambie "products.push" por "productos.push" me tiraba mal la funcion
     fs.writeFileSync("./database/productos.json", JSON.stringify(productos))
 
     socket.emit("cargadeProductos", productos);
   })
 
   socket.on("idaEliminar" , (id)=>{
-    let arrayVacio =[ ];
+    let arrayVacio =[];
+    let productos = JSON.parse(
+        fs.readFileSync("./database/productos.JSON", "utf-8"));
+        // aca tenia q volver a traer los productos porque no me tomaba "productos"
     productos.map((product) =>{
         if(product.id !== id) arrayVacio.push(product)
   
